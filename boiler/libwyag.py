@@ -8,6 +8,7 @@ import hashlib
 from math import ceil
 #Unlike a Unix shell, Python does not do any automatic path expansions.
 import os
+#Operating system functions
 import re # for matching 
 import sys
 import zlib #compressing 

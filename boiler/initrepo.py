@@ -30,6 +30,44 @@ First will be a general path building function'''
 #the *path makes the function variadic so call with multiple path components as seperate args
 #Recieves the path as a list
 def repo_path(repo, *path):
+    #Joins the .git directory of the repo with additional path components.
     """Compute path under repo's gitdir."""
     return os.path.join(repo.gitdir, path)
+
+def repo_file(repo, *path, mkdir=False):
+    #Returns full path inside/under .git/ ensures directory leading to file exists / the directory is real
+    #This file fuction only creates directories up to the last component unlike the other 
+    #Same as repo_path, but create dirname(*path) if absent
+    if repo_dir(repo, *path[:-1], mkdir = mkdir):
+        #The path[:-1] exlcudes the file name to ensure only directories are created
+        return repo_path(repo, *path)
+def repo_dir(repo, *path, mkdir=False):
+    #Ensures the directory's path exists and optionally creating it
+    """Same as repo_path, but mkdir *path if absent if mkdir"""
+    #returns the full path
+    path = repo_path(repo, *path)
+    #if mkdir is true
+    if os.path.exists(path):
+        #edgecase to make sure the path is also a directory
+        if(os.path.isdir(path)):
+            return path
+        else:
+            raise Exception(f"Not a directory {path}")
+        
+    if mkdir:
+        os.makedirs(path) #Creates the full directory path if it doesnt exist
+        return path
+    else:
+        return None
+    
+    #Next we will work on creating a new repository(starting with the directory)
+    #need import os?
+
+
+
+
+
+
+
+
     
