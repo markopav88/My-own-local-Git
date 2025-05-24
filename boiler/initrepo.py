@@ -24,3 +24,12 @@ class GitRepository (object):
             vers = int(self.conf.get("core", "repositoryformatversion"))
             if vers != 0:
                 raise Exception("Unsupported repositoryformatversion: {vers}")
+#Next is Path manipulaiton of the repo with utility functions
+'''These functions will compute the paths and create missing directorys structures if needed
+First will be a general path building function'''
+#the *path makes the function variadic so call with multiple path components as seperate args
+#Recieves the path as a list
+def repo_path(repo, *path):
+    """Compute path under repo's gitdir."""
+    return os.path.join(repo.gitdir, path)
+    
