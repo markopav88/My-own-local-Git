@@ -70,6 +70,7 @@ def repo_create(path):
     #Now make sure we are not overwriting the exisiting non-empty repo
     if os.path.exists(repo.worktree):
         if not os.path.isdir(repo.worktree):
+            #dont want to treat a file as a directory
             raise Exception(f"{path} is not a directory!")
         if os.path.exists(repo.gitdir) and os.listdir(repo.gitdir):
             raise Exception(f"{path} is not empty")
