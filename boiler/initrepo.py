@@ -50,6 +50,8 @@ def repo_dir(repo, *path, mkdir=False):
     if os.path.exists(path):
         #edgecase to make sure the path is also a directory
         if(os.path.isdir(path)):
+            #the os module is great from python because in this specific case i can ask the os 
+            #"Hey is this path a directory?""
             return path
         else:
             raise Exception(f"Not a directory {path}")
