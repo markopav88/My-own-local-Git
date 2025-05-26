@@ -62,7 +62,22 @@ def repo_dir(repo, *path, mkdir=False):
     
     #Next we will work on creating a new repository(starting with the directory)
     #need import os?
+def repo_create(path):
+    """Create a new repository at path"""
+    #path is where the user want the repo to be, true skips the validation(create a new repo)
+    repo = GitRepository(path, force = true)
 
+    #Now make sure we are not overwriting the exisiting non-empty repo
+    if os.path.exists(repo.worktree):
+        if not os.path.isdir(repo.worktree):
+            raise Exception(f"{path} is not a directory!")
+        if os.path.exists(repo.gitdir) and os.listdir(repo.gitdir):
+            raise Exception(f"{path} is not empty")
+    else:
+        os.makedirs(repo.worktree)
+#If path exists,make sure its a directory.
+#Make sure .git is missing or empty
+#If doesnt exist, create a directory
 
 
 
