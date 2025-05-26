@@ -68,13 +68,16 @@ def repo_create(path):
     """Create a new repository at path"""
     #path is where the user want the repo to be, true skips the validation(create a new repo)
     repo = GitRepository(path, force = true)
+    #Force is here in CREATE because we need to overide the .git directory check because the thing we want to create doesnt even exist yet 
 
     #Now make sure we are not overwriting the exisiting non-empty repo
     if os.path.exists(repo.worktree):
         if not os.path.isdir(repo.worktree):
             #dont want to treat a file as a directory
-            raise Exception(f"{path} is not a directory!")
+            raise Exception(f"{path} is not a directory(a file most likey?)!")
         if os.path.exists(repo.gitdir) and os.listdir(repo.gitdir):
+            #dont want to override .git data that already there for the path
+            #only want to make a new repo is .git/ if msising or empty
             raise Exception(f"{path} is not empty")
     else:
         os.makedirs(repo.worktree)
