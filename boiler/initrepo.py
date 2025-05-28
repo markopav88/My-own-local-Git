@@ -18,7 +18,7 @@ class GitRepository (object):
         if cf and os.path.exists(cf):
             self.conf.read([cf])
         elif not force:
-            raise Execption("Configuration file missing")
+            raise Excepption("Configuration file missing")
 
         if not force:
             vers = int(self.conf.get("core", "repositoryformatversion"))
@@ -81,9 +81,29 @@ def repo_create(path):
             raise Exception(f"{path} is not empty")
     else:
         os.makedirs(repo.worktree)
-#If path exists,make sure its a directory.
-#Make sure .git is missing or empty
-#If doesnt exist, create a directory
+"""If path exists,make sure its a directory ,Make sure .git is missing or empty ,If doesnt exist, create a directory """
+
+    #assert to make sure doesnt fail in silence
+    """This sets up gits needed structure(branch names,objects for gits data(blobs,trees,commits 
+    and ref/tags and ref/heads for tracking tags and branchs)"""
+    assert repo_dir(repo, "branches",mkdir=True)
+    assert repo_dir(repo, "objects",mkdir =True)
+    assert repo_dir(repo, "refs","tags",mkdir=True)
+    assert repo_dir(repo,"refs","heads",mkdir =True)
+
+    #.git/description
+    with open(repo_file(repo, "HEAD"), "w") as f: 
+        f.write("ref: refs/heads/master\n") #set default branch as master
+
+    with open(repo_file(repo,"config"), "w") as f: #need config for format,file mode,if repo == bare?
+        config = repo_default_config()
+        config.write(f)
+    return repo
+
+    
+
+
+
 
 
 
