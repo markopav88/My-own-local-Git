@@ -94,6 +94,7 @@ def repo_create(path):
     #.git/description
     with open(repo_file(repo, "HEAD"), "w") as f: 
         f.write("ref: refs/heads/master\n") #set default branch as master
+        #f is the opened file object
 
     with open(repo_file(repo,"config"), "w") as f: #need config for format,file mode,if repo == bare?
         config = repo_default_config()
