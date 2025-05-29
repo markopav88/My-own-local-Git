@@ -99,7 +99,17 @@ def repo_create(path):
     with open(repo_file(repo,"config"), "w") as f: #need config for format,file mode,if repo == bare?
         config = repo_default_config()
         config.write(f)
+    
     return repo
+
+def repo_default_config():
+    ret = configparser.ConfigParser()
+    ret.add_section("core")
+    ret.set("core","repositoryformatversion","0")
+    ret.set("core","filemode","false")
+    ret.set("core","bare","false")
+
+    return ret
 
     
 
