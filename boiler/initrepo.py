@@ -64,6 +64,15 @@ def repo_dir(repo, *path, mkdir=False):
     
     #Next we will work on creating a new repository(starting with the directory)
     #need import os?
+def repo_default_config():
+    ret = configparser.ConfigParser()
+    ret.add_section("core")
+    ret.set("core","repositoryformatversion","0")
+    ret.set("core","filemode","false")
+    ret.set("core","bare","false")
+
+    return ret
+    
 def repo_create(path):
     """Create a new repository at path"""
     #path is where the user want the repo to be, true skips the validation(create a new repo)
@@ -102,14 +111,7 @@ def repo_create(path):
     
     return repo
 
-def repo_default_config():
-    ret = configparser.ConfigParser()
-    ret.add_section("core")
-    ret.set("core","repositoryformatversion","0")
-    ret.set("core","filemode","false")
-    ret.set("core","bare","false")
 
-    return ret
 
     
 
